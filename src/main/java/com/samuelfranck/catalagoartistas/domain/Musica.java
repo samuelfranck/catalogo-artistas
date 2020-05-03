@@ -1,13 +1,39 @@
 package com.samuelfranck.catalagoartistas.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+@Entity
 public class Musica implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private Integer duracao;
+	
+	@ManyToMany
+	@JoinTable(name = "MUSICA_ALBUM",
+		joinColumns = @JoinColumn(name="musica_id"),
+		inverseJoinColumns = @JoinColumn(name="album_id")
+	)
+	private List<Album> albunsQueCompoe = new ArrayList<>();
+	
+	@ManyToMany(mappedBy="musicasInterpretadas")
+	private List<Artista> interpretes = new ArrayList<>();
+	
+	@ManyToMany(mappedBy="musicasComoAutor")
+	private List<Artista> autores = new ArrayList<>();
 	
 	public Musica() {
 	}
@@ -41,6 +67,30 @@ public class Musica implements Serializable {
 
 	public void setDuracao(Integer duracao) {
 		this.duracao = duracao;
+	}
+
+	public List<Album> getAlbunsQueCompoe() {
+		return albunsQueCompoe;
+	}
+
+	public void setAlbunsQueCompoe(List<Album> albunsQueCompoe) {
+		this.albunsQueCompoe = albunsQueCompoe;
+	}
+
+	public List<Artista> getInterpretes() {
+		return interpretes;
+	}
+
+	public void setInterpretes(List<Artista> interpretes) {
+		this.interpretes = interpretes;
+	}
+
+	public List<Artista> getAutores() {
+		return autores;
+	}
+
+	public void setAutores(List<Artista> autores) {
+		this.autores = autores;
 	}
 
 	@Override

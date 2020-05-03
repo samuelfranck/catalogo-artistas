@@ -1,14 +1,48 @@
 package com.samuelfranck.catalagoartistas.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+@Entity
 public class Artista implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private String Nacionalidade;
 	
+	@ManyToMany
+	@JoinTable(name="ARTISTA_ALBUM",
+	joinColumns = @JoinColumn(name = "artista_id"),
+	inverseJoinColumns = @JoinColumn(name = "album_id")
+	)
+	private List<Album> albunsQueParticipa = new ArrayList<>();
+	
+	@ManyToMany
+	@JoinTable(name="AUTORES_MUSICAS",
+	joinColumns = @JoinColumn(name="artista_id"),
+	inverseJoinColumns = @JoinColumn(name="musica_id")
+	)
+	private List<Musica> musicasComoAutor = new ArrayList<>();
+	
+	@ManyToMany
+	@JoinTable(name="INTERPRETES_MUSICAS",
+	joinColumns = @JoinColumn(name="artista_id"),
+	inverseJoinColumns = @JoinColumn(name="musica_id")
+	)
+	private List<Musica> musicasInterpretadas = new ArrayList<>();
+
 	public Artista() {
 	}
 
@@ -42,7 +76,32 @@ public class Artista implements Serializable {
 	public void setNacionalidade(String nacionalidade) {
 		Nacionalidade = nacionalidade;
 	}
+	
+	public List<Album> getAlbunsQueParticipa() {
+		return albunsQueParticipa;
+	}
 
+	public void setAlbunsQueParticipa(List<Album> albunsQueParticipa) {
+		this.albunsQueParticipa = albunsQueParticipa;
+	}
+
+	public List<Musica> getMusicasInterpretadas() {
+		return musicasInterpretadas;
+	}
+
+	public void setMusicasInterpretadas(List<Musica> musicasInterpretadas) {
+		this.musicasInterpretadas = musicasInterpretadas;
+	}
+	
+	public List<Musica> getMusicasComoAutor() {
+		return musicasComoAutor;
+	}
+
+	public void setMusicasComoAutor(List<Musica> musicasComoAutor) {
+		this.musicasComoAutor = musicasComoAutor;
+	}
+
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

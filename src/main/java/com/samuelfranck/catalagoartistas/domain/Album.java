@@ -1,13 +1,29 @@
 package com.samuelfranck.catalagoartistas.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+@Entity
 public class Album implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private Integer ano;
+	
+	@ManyToMany(mappedBy="albunsQueCompoe")
+	private List<Musica> musicas = new ArrayList<>();
+	
+	@ManyToMany(mappedBy="albunsQueParticipa")
+	private List<Artista> participantes = new ArrayList<>();
 	
 	public Album() {
 	}
@@ -42,7 +58,23 @@ public class Album implements Serializable{
 	public void setAno(Integer ano) {
 		this.ano = ano;
 	}
+	
+	public List<Musica> getMusicas() {
+		return musicas;
+	}
 
+	public void setMusicas(List<Musica> musicas) {
+		this.musicas = musicas;
+	}
+
+	public List<Artista> getParticipantes() {
+		return participantes;
+	}
+
+	public void setParticipantes(List<Artista> participantes) {
+		this.participantes = participantes;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

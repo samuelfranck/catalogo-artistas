@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Artista implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,6 +24,7 @@ public class Artista implements Serializable {
 	private String nome;
 	private String Nacionalidade;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="ARTISTA_ALBUM",
 	joinColumns = @JoinColumn(name = "artista_id"),
@@ -29,6 +32,7 @@ public class Artista implements Serializable {
 	)
 	private List<Album> albunsQueParticipa = new ArrayList<>();
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="AUTORES_MUSICAS",
 	joinColumns = @JoinColumn(name="artista_id"),
@@ -36,6 +40,7 @@ public class Artista implements Serializable {
 	)
 	private List<Musica> musicasComoAutor = new ArrayList<>();
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="INTERPRETES_MUSICAS",
 	joinColumns = @JoinColumn(name="artista_id"),

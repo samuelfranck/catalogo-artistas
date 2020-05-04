@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Musica implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,6 +24,7 @@ public class Musica implements Serializable {
 	private String nome;
 	private Integer duracao;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "MUSICA_ALBUM",
 		joinColumns = @JoinColumn(name="musica_id"),

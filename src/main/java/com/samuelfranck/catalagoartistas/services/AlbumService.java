@@ -20,5 +20,10 @@ public class AlbumService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado: Id:" + id 
 				+ ",Tipo: " + Album.class.getName()));
 	}
+	
+	public Album insert(Album obj) {
+		obj.setId(null);
+		return repo.save(obj);
+	}
 
 }
